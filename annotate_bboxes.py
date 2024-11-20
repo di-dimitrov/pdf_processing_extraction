@@ -328,13 +328,19 @@ def remove_bad_data(img_path, img_path_txt):
 # load all images (with multiple extensions) from a directory using OpenCV
 img_dir = args.images_path
 image_list = []
-print(img_dir)
-print(os.listdir(img_dir))
-for f in os.listdir(img_dir):
-    f_path = os.path.join(img_dir, f)
-    test_img = cv2.imread(f_path)
+img_dir_globed = os.path.join(img_dir,'**','*')
+files_l = [f for f in glob.iglob(img_dir_globed, recursive=True) if os.path.isfile(f)]
+
+#for f in os.listdir(img_dir):
+#    f_path = os.path.join(img_dir, f)
+#    test_img = cv2.imread(f_path)
+#    if test_img is not None:
+#        image_list.append(f_path)
+
+for f in files_l:
+    test_img = cv2.imread(f)
     if test_img is not None:
-        image_list.append(f_path)
+        image_list.append(f)
 
 #print(image_list)
 
