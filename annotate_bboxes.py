@@ -57,7 +57,9 @@ def change_img_index(x):
     global img_index, img
     img_index = x
     img_path = image_list[img_index]
-    img = cv2.imread(img_path)
+    #img = cv2.imread(img_path)
+    img = cv2.imdecode(np.fromfile(img_path, dtype=np.uint8),
+                   cv2.IMREAD_UNCHANGED)
     if WITH_QT:
         cv2.displayOverlay(WINDOW_NAME, "Showing image "
                                     "" + str(img_index) + "/"
@@ -338,7 +340,9 @@ files_l = [f for f in glob.iglob(img_dir_globed, recursive=True) if os.path.isfi
 #        image_list.append(f_path)
 
 for f in files_l:
-    test_img = cv2.imread(f)
+    #test_img = cv2.imread(f)
+    test_img = cv2.imdecode(np.fromfile(f, dtype=np.uint8),
+                   cv2.IMREAD_UNCHANGED)
     if test_img is not None:
         image_list.append(f)
 
