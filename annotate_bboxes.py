@@ -1,3 +1,4 @@
+from natsort import natsorted
 import argparse
 import textwrap
 import glob
@@ -140,6 +141,13 @@ def save_bb(txt_path, line):
     with open(txt_path, 'a') as myfile:
         myfile.write(line + "\n") # append line
 
+def delete_bb_last(txt_path):
+    with open(txt_path, "r") as old_file:
+        lines = old_file.readlines()
+
+    with open(txt_path, "w") as new_file:
+        for line in lines[:-1]:
+                new_file.write(line)
 
 def delete_bb(txt_path, line_index):
     with open(txt_path, "r") as old_file:
@@ -345,9 +353,8 @@ for f in files_l:
                    cv2.IMREAD_UNCHANGED)
     if test_img is not None:
         image_list.append(f)
-
-#print(image_list)
-
+        
+image_list = natsorted(image_list)
 #SORT OR NOT?
 #image_list.sort()
 #if not args.sort:
@@ -355,7 +362,6 @@ for f in files_l:
     #np.random.shuffle(image_list)
 
 last_img_index = len(image_list) - 1
-print(image_list)
 
 if not os.path.exists(bb_dir):
     os.makedirs(bb_dir)
@@ -456,6 +462,9 @@ while True:
     pressed_key = cv2.waitKey(50)
 
     """ Key Listeners START """
+    #New key - remove last bounding box
+    if pressed_key == ord('z'):
+        delete_bb_last(txt_path)
     if pressed_key == ord('a') or pressed_key == ord('d'):
         # show previous image key listener
         if pressed_key == ord('a'):
@@ -583,12 +592,14 @@ while True:
                                 "[q] to quit;\n"
                                 "[a] or [d] to change Image;\n"
                                 "[w] or [s] to change Class.\n"
+                                "[z] to remove last bounding box.\n"
                                 "%s" % img_path, 6000)
         else:
             print("[e] to show edges;\n"
                     "[q] to quit;\n"
                     "[a] or [d] to change Image;\n"
                     "[w] or [s] to change Class.\n"
+                    "[z] to remove last bounding box.\n"
                     "%s" % img_path)
     # show edges key listener
     elif pressed_key == ord('e'):

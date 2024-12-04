@@ -39,3 +39,4 @@ tornado==6.3.2
 tqdm==4.65.0
 traitlets==5.9.0
 wcwidth==0.2.6
+natsort==7.1.1
