@@ -1,4 +1,6 @@
 from PIL import Image
+from natsort import natsorted
+
 import os
 import glob
 
@@ -48,7 +50,7 @@ def get_sorted_files_in_folder(folder_path):
     #files_in_folder = [os.path.join(folder_path, file) for file in os.listdir(folder_path) if os.path.isfile(os.path.join(folder_path, file))]
     img_dir_globed = os.path.join(folder_path,'**','*')
     files_in_folder = [f for f in glob.iglob(img_dir_globed, recursive=True) if os.path.isfile(f)]
-    sorted_files = sorted(files_in_folder)
+    sorted_files = natsorted(files_in_folder)
     return sorted_files
 
 

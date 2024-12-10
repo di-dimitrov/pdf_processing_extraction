@@ -5,6 +5,7 @@ import uuid # Use uuid.uuid4() for privacy safe unique generator
 import argparse
 from collections import defaultdict
 from subprocess import call
+from natsort import natsorted
 
 
 '''
@@ -69,7 +70,7 @@ if __name__ == "__main__":
     info['date']=args.date
     
     cropped_questions_paths = os.path.join(args.img_dir,args.source_name + '*/*')
-    cropped_questions_files = [f for f in glob.iglob(cropped_questions_paths, recursive=True) if os.path.isfile(f)]
+    cropped_questions_files = natsorted([f for f in glob.iglob(cropped_questions_paths, recursive=True) if os.path.isfile(f)])
     
     dataset_path = os.path.join(args.data_dir, args.language.lower() , args.source_name)
     if not os.path.exists(dataset_path):
