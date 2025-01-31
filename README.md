@@ -96,7 +96,20 @@ python generate_metadata.py --source_name="2dzi_bzo_v1-otgovori_20052024" --grad
 
 Results of the script are located in the `dataset/` folder of the repository. A subdirectory is created for each language. 
 
-## Manual answer annotation
+## image_loader.py -> load images, select correct answers, and select visual elements `graph/table/chemical_structure/figure`
+Note: Interface is very simple, i.e., it can be improved.
+
+To start the application run:
+```
+uvicorn image_loader:app --reload
+```
+An empty input field will appear that expects input <file_path> for `*_metadata.json` file. Example: `dataset/bulgarian/Matura_2024_Math_metadata.json`
+
+This will open the json and load the first question with empty `answer_key`. Select the answer (based on image/document with answers) and then select the approriate visual elements (if such apply). Press `Submit` to continue to next element. Once the json is processed you have to input another <file_path>. 
+
+_Note: Submitting modifies the existing json.
+
+## Manual answer annotation (if image_loader cannot be used)
 
 After executing the above steps, open the generated `<source_name>_metadata.json` file. Using the original PDF or a separate PDF for answers, depending on the exam format, fill the `answer_key` field with the correct answer: `A or B or C or D` and if the question contains any visual information change the value of 
 `chemical_structure`, `table`, `figure`, `graph` accordingly (by default value is 0, change it to 1 if the question contains the respective visual element) 

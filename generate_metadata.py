@@ -30,7 +30,7 @@ def create_metadata_object(uuid, old_img_path, new_path, info):
     new_obj['original_img_name'] = old_img_path
     new_obj['source_file'] = info['source_name']
     new_obj['answer_key'] = '' # A or B or C or D
-    new_obj['type'] = os.path.basename(old_img_path).removeprefix('cropped_image_').split('_')[0]
+    new_obj['type'] = os.path.basename(old_img_path).removeprefix('cropped_image_').split('_')[1]
     new_obj['grade'] = info['grade']
     new_obj['subject'] = info['subject']
     new_obj['subject_grouped'] = info['subject_group']
@@ -71,6 +71,8 @@ if __name__ == "__main__":
     
     cropped_questions_paths = os.path.join(args.img_dir,args.source_name + '*/*')
     cropped_questions_files = natsorted([f for f in glob.iglob(cropped_questions_paths, recursive=True) if os.path.isfile(f)])
+    
+    print(cropped_questions_files)
     
     dataset_path = os.path.join(args.data_dir, args.language.lower() , args.source_name)
     if not os.path.exists(dataset_path):

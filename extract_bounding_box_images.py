@@ -40,7 +40,7 @@ def extract_images_from_bounding_boxes(image_path, txt_file, file_name, parent_d
                 print(f"Directory '{file_name}' created successfully.")
             for i, bbox in enumerate(bounding_boxes):
                 cropped_image = img.crop(bbox)
-                output_file = f"{parent_directory}/{file_name}/cropped_image_{question_types[i]}_{i}.jpg"
+                output_file = f"{parent_directory}/{file_name}/cropped_image_{i}_{question_types[i]}.jpg"
                 cropped_image.save(output_file)
                 print(f"Image {i + 1} extracted and saved as '{output_file}'.")
     except Exception as e:

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Image Selector</title>
+	<style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+          .container {
+            display: flex;
+            justify-content: flex-start;
+            align-items: flex-start;
+        }
+
+        /* Adjusted margin to bring the two columns closer */
+        .form-left {
+            max-width: 50%; /* Adjust the width of the left form */
+            margin-right: 20px; /* Reduced space between left and right */
+        }
+
+        .form-right {
+            display: flex;
+            flex-direction: column;
+            gap: 20px; /* Adds space between elements */
+            margin-left: 10px; /* Remove additional space from the right */
+        }
+		
+		label {
+            font-size: 1.0em;
+        }
+
+        input[type="radio"], input[type="checkbox"] {
+            margin-right: 10px;
+        }
+       
+    </style>
+</head>
+<body>
+    <h1>Set Data File</h1>
+    <form action="/set_file" method="post">
+        <label for="data_file">Enter Data File Path:</label>
+        <input type="text" name="data_file" id="data_file" required>
+        <button type="submit">Set File</button>
+    </form>
+
+    <hr>
+
+    {% if item %}
+    <h1>Select an Answer for q: {{ item.id }}</h1>
+    <img src="{{ img_url }}" alt="Question Image" height="350px" width="500px">
+    <form action="/submit" method="post">
+        <input type="hidden" name="id" value="{{ item.id }}">
+
+		<label for="answer">Choose an answer:</label>
+
+        <!-- Answer selection -->
+        <div class="container">
+            <!-- Left side for the image and answer selection -->
+            <div class="form-left">
+                <div>
+                    <label>
+                        <input type="radio" name="answer" value="A"> A
+                    </label>
+					<br>
+                    <label>
+                        <input type="radio" name="answer" value="B"> B
+                    </label>
+					<br>
+                    <label>
+                        <input type="radio" name="answer" value="C"> C
+                    </label>
+					<br>
+                    <label>
+                        <input type="radio" name="answer" value="D"> D
+                    </label>
+					<br>
+                    <label>
+                        <input type="radio" name="answer" value="E"> E
+                    </label>
+                </div>
+            </div>
+
+            <!-- Right side for checkboxes -->
+            <div class="form-right">
+                <label>
+                    <input type="checkbox" name="chemical_structure"> Chemical structure
+                </label>
+                <label>
+                    <input type="checkbox" name="tablee"> Table
+                </label>
+                <label>
+                    <input type="checkbox" name="figuree"> Figure
+                </label>
+                <label>
+                    <input type="checkbox" name="graph"> Graph
+                </label>
+            </div>
+        </div>
+
+        <!-- Submit button -->
+		<br>
+		<br>
+        <button type="submit">Submit</button>
+    </form>
+	{% else %}
+    <p><strong>No data available.</strong> Please set a data file first.</p>
+    {% endif %}
+</body>
+</html>
